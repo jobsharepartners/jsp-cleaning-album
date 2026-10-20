@@ -1,90 +1,140 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>JSP 清掃アルバム 試作版</title><style>:root{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;color:#172333;background:#f5f7fb}*{box-sizing:border-box}body{margin:0}.wrap{max-width:760px;margin:auto;padding:20px 14px 50px}header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}h1{font-size:22px;margin:0}.sub{font-size:12px;color:#68768b;margin-top:5px}.tag{background:#e6f1ff;color:#205ca2;padding:7px 10px;border-radius:20px;font-size:12px}.card{background:white;border:1px solid #e4e9f1;border-radius:16px;padding:17px;margin-bottom:14px;box-shadow:0 2px 10px #17233308}.prop{font-weight:700;font-size:17px;margin-bottom:5px}.muted{color:#68768b;font-size:13px}.picker{display:block;text-align:center;border:2px dashed #9eb8d5;border-radius:15px;padding:30px 12px;background:#f8fbff;cursor:pointer}.picker strong{display:block;font-size:17px;margin:7px 0}.picker span{font-size:12px;color:#66768a}input[type=file]{display:none}.controls{display:flex;gap:10px;margin-top:14px}.btn{border:0;border-radius:10px;padding:13px 14px;font-size:14px;font-weight:700;background:#2169b7;color:white;cursor:pointer;flex:1}.btn.secondary{background:#eaf0f7;color:#27415e}.btn:disabled{opacity:.45}.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}.stat{background:#f5f8fc;padding:12px;border-radius:10px}.stat b{display:block;font-size:19px;margin-top:5px}.progress{height:9px;background:#e6ebf3;border-radius:99px;overflow:hidden;margin:12px 0 5px}.bar{height:100%;background:#27866b;width:0%;transition:width .2s}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.item{position:relative;aspect-ratio:1;background:#e9edf2;border-radius:9px;overflow:hidden}.item img{width:100%;height:100%;object-fit:cover}.item button{position:absolute;top:4px;right:4px;border:0;background:#152435ce;color:white;border-radius:50%;width:25px;height:25px;font-size:17px}.empty{text-align:center;padding:30px 0;color:#8290a0}.foot{font-size:12px;line-height:1.6;color:#68768b}.status{font-size:13px;color:#315d83;min-height:20px}.small{font-size:12px;color:#697a90}.field{width:100%;padding:12px;margin-top:10px;border:1px solid #cbd5e1;border-radius:9px;font-size:16px}</style></head><body><main class="wrap"><header><div><h1>JSP 清掃アルバム</h1><div class="sub">iPhone・Android対応 試作版 Ver.4（形式確認）</div></div><div class="tag">Firebase保存テスト</div></header><section class="card"><div class="prop">テスト物件 101号室</div><div class="muted" id="date"></div></section><section class="card" id="authCard"><strong>Firebaseログイン</strong><p class="muted">登録済みのテストユーザーでログインしてください。</p><input id="email" type="email" placeholder="メールアドレス" autocomplete="username" class="field"><input id="password" type="password" placeholder="パスワード" autocomplete="current-password" class="field"><div class="controls"><button class="btn" id="login">ログイン</button><button class="btn secondary" id="logout" disabled>ログアウト</button></div><p class="status" id="authStatus">未ログイン</p></section><section class="card"><label class="picker" for="photos"><div style="font-size:32px">📷</div><strong>写真をまとめて選択</strong><span>スマートフォンの写真ライブラリから複数選択できます（最大100枚）</span></label><input id="photos" type="file" accept="image/*" multiple><div class="controls"><button class="btn" id="compress" disabled>写真を圧縮して確認</button><button class="btn secondary" id="reset" disabled>すべてクリア</button></div><div class="controls"><button class="btn" id="upload" disabled>Firebaseへアップロード</button></div><p class="small">最初は10枚程度でテストしてください。アップロード中は画面を閉じないでください。</p><div class="progress"><div class="bar" id="uploadBar"></div></div><p class="status" id="uploadStatus">未アップロード</p><div class="stats"><div class="stat"><span class="small">選択した写真</span><b id="count">0枚</b></div><div class="stat"><span class="small">元の合計容量</span><b id="original">0 MB</b></div><div class="stat"><span class="small">送信予定の合計容量</span><b id="compressed">—</b></div><div class="stat"><span class="small">送信準備完了</span><b id="done">0 / 0</b></div></div><div class="progress"><div class="bar" id="bar"></div></div><p class="status" id="status">写真を選択してください。</p></section><section class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><strong>選択写真プレビュー</strong><span class="small" id="previewCount">0枚</span></div><div id="grid" class="grid"></div><div id="empty" class="empty">写真がまだ選択されていません</div></section><p class="foot">※「Firebaseへアップロード」を押すと、写真はFirebase Storageへ実際に保存されます。圧縮は端末内のブラウザで実行します。写真100枚の処理には端末によって時間がかかる場合があります。HEIC等で圧縮できない写真は元ファイルを保持します。元ファイルは容量が大きく、閲覧側の端末で表示できない場合があります。圧縮処理中は画面を閉じないでください。</p></main><script>const MAX=100, MAX_SIDE=1600, QUALITY=.76;let items=[],busy=false;const $=id=>document.getElementById(id);$('date').textContent='清掃日：'+new Intl.DateTimeFormat('ja-JP',{year:'numeric',month:'long',day:'numeric'}).format(new Date());function mb(n){return (n/1048576).toFixed(1)+' MB'}function update(){const size=items.reduce((s,x)=>s+x.file.size,0),cs=items.filter(x=>x.blob).reduce((s,x)=>s+x.blob.size,0),done=items.filter(x=>x.blob).length;$('count').textContent=items.length+'枚';$('original').textContent=mb(size);$('compressed').textContent=done?mb(cs):'—';$('done').textContent=done+' / '+items.length;$('previewCount').textContent=items.length+'枚';$('compress').disabled=!items.length||busy;$('reset').disabled=!items.length||busy;$('upload').disabled=!items.length||busy||!window.albumUser;$('empty').style.display=items.length?'none':'block';}function render(){const g=$('grid');g.replaceChildren();for(const x of items){const d=document.createElement('div');d.className='item';const img=document.createElement('img');img.src=x.preview;img.alt='選択した写真';img.loading='lazy';const b=document.createElement('button');b.textContent='×';b.title='この写真を除外';b.disabled=busy;b.onclick=()=>{URL.revokeObjectURL(x.preview);items=items.filter(v=>v!==x);render();update()};d.append(img,b);g.append(d)}update()}$('photos').addEventListener('change',e=>{const files=[...e.target.files].filter(f=>f.type.startsWith('image/')||/\.(heic|heif)$/i.test(f.name));let added=0;for(const file of files){if(items.length>=MAX)break;items.push({file,preview:URL.createObjectURL(file),blob:null,originalFallback:false,reason:""});added++}e.target.value='';render();$('status').textContent=files.length>added?`上限100枚のため、${files.length-added}枚は追加されませんでした。`:`${added}枚を追加しました。`;});$('reset').onclick=()=>{items.forEach(x=>URL.revokeObjectURL(x.preview));items=[];render();$('bar').style.width='0%';$('status').textContent='写真を選択してください.';$('uploadBar').style.width='0%';$('uploadStatus').textContent='未アップロード';};async function decodeImage(file){
-  // createImageBitmap is unavailable in some Android in-app browsers.
-  if(typeof createImageBitmap==='function'){
-    try{
-      const bitmap=await createImageBitmap(file);
-      return {image:bitmap,width:bitmap.width,height:bitmap.height,cleanup:()=>bitmap.close?.()};
-    }catch(err){console.warn('createImageBitmap fallback:',err.message)}
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/><title>JSP 清掃アルバム Ver.5</title><style>:root{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;color:#172333;background:#f5f7fb}*{box-sizing:border-box}body{margin:0}.wrap{max-width:760px;margin:auto;padding:20px 14px 50px}header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}h1{font-size:22px;margin:0}.sub{font-size:12px;color:#68768b;margin-top:5px}.tag{background:#e6f1ff;color:#205ca2;padding:7px 10px;border-radius:20px;font-size:12px}.card{background:white;border:1px solid #e4e9f1;border-radius:16px;padding:17px;margin-bottom:14px;box-shadow:0 2px 10px #17233308}.prop{font-weight:700;font-size:17px;margin-bottom:5px}.muted{color:#68768b;font-size:13px}.picker{display:block;text-align:center;border:2px dashed #9eb8d5;border-radius:15px;padding:30px 12px;background:#f8fbff;cursor:pointer}.picker strong{display:block;font-size:17px;margin:7px 0}.picker span{font-size:12px;color:#66768a}input[type=file]{display:none}.controls{display:flex;gap:10px;margin-top:14px}.btn{border:0;border-radius:10px;padding:13px 14px;font-size:14px;font-weight:700;background:#2169b7;color:white;cursor:pointer;flex:1}.btn.secondary{background:#eaf0f7;color:#27415e}.btn:disabled{opacity:.45}.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}.stat{background:#f5f8fc;padding:12px;border-radius:10px}.stat b{display:block;font-size:19px;margin-top:5px}.progress{height:9px;background:#e6ebf3;border-radius:99px;overflow:hidden;margin:12px 0 5px}.bar{height:100%;background:#27866b;width:0%;transition:width .2s}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.item{position:relative;aspect-ratio:1;background:#e9edf2;border-radius:9px;overflow:hidden}.item img{width:100%;height:100%;object-fit:cover}.item button{position:absolute;top:4px;right:4px;border:0;background:#152435ce;color:white;border-radius:50%;width:25px;height:25px;font-size:17px}.empty{text-align:center;padding:30px 0;color:#8290a0}.foot{font-size:12px;line-height:1.6;color:#68768b}.status{font-size:13px;color:#315d83;min-height:20px}.small{font-size:12px;color:#697a90}.field{width:100%;padding:12px;margin-top:10px;border:1px solid #cbd5e1;border-radius:9px;font-size:16px}
+.item .flag{position:absolute;bottom:0;left:0;right:0;font-size:10px;background:#142c46d9;color:white;padding:3px 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.item .flag.ok{background:#08795dcc}.item .flag.bad{background:#a65a10e8}.diagnostics{white-space:pre-wrap;word-break:break-all;background:#f5f8fc;padding:10px;border-radius:8px;font-size:12px;max-height:180px;overflow:auto}.item.uploaded{outline:3px solid #24876a}button:focus-visible{outline:3px solid #fbad43} </style></head><body><main class="wrap"><header><div><h1>JSP 清掃アルバム</h1><div class="sub">iPhone・Android対応 試作版 Ver.5（Pixel写真対策）</div></div><div class="tag">Firebase保存テスト</div></header><section class="card"><div class="prop">テスト物件 101号室</div><div class="muted" id="date"></div></section><section class="card" id="authCard"><strong>Firebaseログイン</strong><p class="muted">登録済みのテストユーザーでログインしてください。</p><input autocomplete="username" class="field" id="email" placeholder="メールアドレス" type="email"/><input autocomplete="current-password" class="field" id="password" placeholder="パスワード" type="password"/><div class="controls"><button class="btn" id="login">ログイン</button><button class="btn secondary" disabled="" id="logout">ログアウト</button></div><p class="status" id="authStatus">未ログイン</p></section><section class="card"><label class="picker" for="photos"><div style="font-size:32px">📷</div><strong>写真をまとめて選択</strong><span>スマートフォンの写真ライブラリから複数選択できます（最大100枚）</span></label><input accept="image/*" id="photos" multiple="" type="file"/><div class="controls"><button class="btn" disabled="" id="compress">写真を圧縮して確認</button><button class="btn secondary" disabled="" id="reset">すべてクリア</button></div><div class="controls"><button class="btn" disabled="" id="upload">Firebaseへアップロード</button></div><p class="small">最初は10枚程度でテストしてください。アップロード中は画面を閉じないでください。</p><div class="progress"><div class="bar" id="uploadBar"></div></div><p class="status" id="uploadStatus">未アップロード</p><div class="stats"><div class="stat"><span class="small">選択した写真</span><b id="count">0枚</b></div><div class="stat"><span class="small">元の合計容量</span><b id="original">0 MB</b></div><div class="stat"><span class="small">送信予定の合計容量</span><b id="compressed">—</b></div><div class="stat"><span class="small">送信準備完了</span><b id="done">0 / 0</b></div></div><div class="progress"><div class="bar" id="bar"></div></div><p class="status" id="status">写真を選択してください。</p><details style="margin-top:10px"><summary>写真別の処理結果・エラー詳細</summary><pre class="diagnostics" id="diagnostics">まだ処理していません</pre></details></section><section class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><strong>選択写真プレビュー</strong><span class="small" id="previewCount">0枚</span></div><div class="grid" id="grid"></div><div class="empty" id="empty">写真がまだ選択されていません</div></section><p class="foot">※テスト版です。写真はFirebase Storageに実際に保存されます。Pixelのモーションフォト等はJPEG部分の抽出を試み、変換できない場合は元画像を保持します。元画像は大容量となり、閲覧端末によっては表示できません。アップロード中は画面を閉じないでください。</p></main><script>const MAX=100, MAX_SIDE=1600, QUALITY=.76;
+let items=[], busy=false;
+const $=id=>document.getElementById(id);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+$('date').textContent='清掃日：'+new Intl.DateTimeFormat('ja-JP',{year:'numeric',month:'long',day:'numeric'}).format(new Date());
+function mb(n){return (n/1048576).toFixed(1)+' MB'}
+function update(){
+ const size=items.reduce((s,x)=>s+x.file.size,0),cs=items.filter(x=>x.blob).reduce((s,x)=>s+x.blob.size,0),done=items.filter(x=>x.blob).length;
+ $('count').textContent=items.length+'枚';$('original').textContent=mb(size);$('compressed').textContent=done?mb(cs):'—';$('done').textContent=done+' / '+items.length;$('previewCount').textContent=items.length+'枚';
+ $('compress').disabled=!items.length||busy;$('reset').disabled=!items.length||busy;$('photos').disabled=busy;
+ $('upload').disabled=!items.length||busy||!window.albumUser||!items.some(x=>!x.uploaded);
+ $('empty').style.display=items.length?'none':'block';
+ $('diagnostics').textContent=items.length?items.map((x,i)=>`${i+1}. ${x.file.name} (${mb(x.file.size)}) → ${x.uploaded?'アップロード済':x.blob?(x.originalFallback?'元画像':'圧縮成功 '+mb(x.blob.size)):'未処理'}${x.reason?' / '+x.reason:''}${x.uploadError?' / 送信エラー '+x.uploadError:''}`).join('\n'):'写真がありません';
+}
+function render(){
+ const g=$('grid');g.replaceChildren();
+ for(const x of items){const d=document.createElement('div');d.className='item'+(x.uploaded?' uploaded':'');const img=document.createElement('img');img.src=x.preview;img.alt=x.file.name;img.loading='lazy';
+ const b=document.createElement('button');b.textContent='×';b.title='この写真を除外';b.disabled=busy;b.onclick=()=>{URL.revokeObjectURL(x.preview);items=items.filter(v=>v!==x);render()};
+ const flag=document.createElement('span');flag.className='flag'+(x.uploaded?' ok':x.originalFallback?' bad':'');flag.textContent=x.uploaded?'保存済':x.originalFallback?'元画像':x.blob?'圧縮済':'未処理';
+ d.append(img,flag,b);g.append(d)}update();
+}
+$('photos').addEventListener('change',e=>{
+ const files=[...e.target.files].filter(f=>f.type.startsWith('image/')||/\.(heic|heif|jpg|jpeg|png|webp)$/i.test(f.name));let added=0;
+ for(const file of files){if(items.length>=MAX)break;items.push({file,preview:URL.createObjectURL(file),blob:null,originalFallback:false,reason:'',uploaded:false,uploadError:'',uploadPath:''});added++}
+ e.target.value='';render();$('status').textContent=files.length>added?`上限100枚のため、${files.length-added}枚は追加されませんでした。`:`${added}枚を追加しました。`;
+});
+$('reset').onclick=()=>{items.forEach(x=>URL.revokeObjectURL(x.preview));items=[];render();$('bar').style.width='0%';$('status').textContent='写真を選択してください。';$('uploadBar').style.width='0%';$('uploadStatus').textContent='未アップロード'};
+// iOS Safari / Android Chrome / Android in-app browser: prefer HTMLImageElement;
+// fall back to createImageBitmap if available. Decode with explicit load events.
+async function decodeImage(file){
+ const errors=[];
+ async function viaImg(){
+  const url=URL.createObjectURL(file);const img=new Image();
+  try{
+   await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=()=>reject(new Error('img.onerror'));img.src=url;if(img.complete&&img.naturalWidth>0)resolve()});
+   if(!img.naturalWidth||!img.naturalHeight)throw new Error('画像サイズを取得できません');
+   return {image:img,width:img.naturalWidth,height:img.naturalHeight,cleanup:()=>URL.revokeObjectURL(url)};
+  }catch(e){URL.revokeObjectURL(url);throw e}
+ }
+ try{return await viaImg()}catch(e){errors.push('img:'+e.message)}
+ if(typeof createImageBitmap==='function')try{const bm=await createImageBitmap(file);return {image:bm,width:bm.width,height:bm.height,cleanup:()=>bm.close?.()}}catch(e){errors.push('bitmap:'+e.message)}
+ throw new Error(errors.join(' / '));
+}
+async function jpegFromMotionPhoto(file){
+ // Google Pixel motion photos typically contain a standard JPEG image followed by MP4 bytes.
+ // Read only the first 16 MB and extract through the first JPEG EOI (FF D9).
+ if(!/\.jpe?g$/i.test(file.name)||file.size<4)return null;
+ const n=Math.min(file.size,16*1024*1024);
+ const bytes=new Uint8Array(await file.slice(0,n).arrayBuffer());
+ if(bytes[0]!==255||bytes[1]!==216)return null;
+ for(let i=2;i<bytes.length-1;i++){
+  if(bytes[i]===255&&bytes[i+1]===217){
+   const end=i+2;
+   // Trimming is meaningful only if extra trailing data exists.
+   if(end<file.size-32)return file.slice(0,end,'image/jpeg');
+   return null;
   }
-  const url=URL.createObjectURL(file);
-  try{
-    const img=new Image();
-    img.decoding='async';
-    await new Promise((resolve,reject)=>{
-      img.onload=resolve;
-      img.onerror=()=>reject(new Error('画像を読み込めません（形式非対応の可能性）'));
-      img.src=url;
-    });
-    return {image:img,width:img.naturalWidth,height:img.naturalHeight,cleanup:()=>URL.revokeObjectURL(url)};
-  }catch(err){URL.revokeObjectURL(url);throw err}
+ }
+ return null;
 }
-async function compress(file){
-  const decoded=await decodeImage(file);
-  try{
-    const scale=Math.min(1,MAX_SIDE/Math.max(decoded.width,decoded.height));
-    const canvas=document.createElement('canvas');
-    canvas.width=Math.max(1,Math.round(decoded.width*scale));
-    canvas.height=Math.max(1,Math.round(decoded.height*scale));
-    const ctx=canvas.getContext('2d');
-    if(!ctx)throw new Error('Canvasを利用できません');
-    ctx.drawImage(decoded.image,0,0,canvas.width,canvas.height);
-    return await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('JPEG変換に失敗')),'image/jpeg',QUALITY));
-  }finally{decoded.cleanup()}
+async function encodeJpeg(source){
+ const decoded=await decodeImage(source);
+ try{
+  const scale=Math.min(1,MAX_SIDE/Math.max(decoded.width,decoded.height));
+  const canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(decoded.width*scale));canvas.height=Math.max(1,Math.round(decoded.height*scale));
+  const ctx=canvas.getContext('2d');if(!ctx)throw new Error('Canvasが利用できません');
+  ctx.drawImage(decoded.image,0,0,canvas.width,canvas.height);
+  const blob=await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('JPEG変換失敗')),'image/jpeg',QUALITY));
+  canvas.width=canvas.height=1;
+  return blob;
+ }finally{decoded.cleanup()}
 }
-// Decode failures should never silently drop a cleaning record. Preserve original bytes.
 async function prepare(item){
  if(item.blob)return;
- try{item.blob=await compress(item.file);item.originalFallback=false;item.reason='';}
- catch(e){item.blob=item.file;item.originalFallback=true;item.reason=(e&&e.message)||String(e);}
+ let firstError='';
+ try{item.blob=await encodeJpeg(item.file);item.reason='通常変換';item.originalFallback=false;return}
+ catch(e){firstError=e.message||String(e)}
+ try{
+  const jpeg=await jpegFromMotionPhoto(item.file);
+  if(jpeg){item.blob=await encodeJpeg(jpeg);item.reason='モーションフォトのJPEG部分を抽出して圧縮';item.originalFallback=false;return}
+ }catch(e){firstError+=' / JPEG抽出:'+e.message}
+ item.blob=item.file;item.originalFallback=true;item.reason='圧縮不可（元画像を保持）:'+firstError;
 }
 $('compress').onclick=async()=>{
- busy=true;update();let fallback=0,firstError='';
- for(let i=0;i<items.length;i++){
-  const x=items[i];await prepare(x);
-  if(x.originalFallback){fallback++;if(!firstError)firstError=x.file.name+'：'+x.reason;}
-  $('bar').style.width=Math.round((i+1)/items.length*100)+'%';
-  $('status').textContent=`送信準備中：${i+1} / ${items.length}枚`;
-  await new Promise(r=>setTimeout(r,0));
- }
- busy=false;update();
- $('status').textContent=`送信準備完了：${items.length}枚（圧縮 ${items.length-fallback}枚・元画像のまま ${fallback}枚）。${fallback?'元画像は容量が大きく、HEIC等は閲覧できない端末があります。':''} ${firstError?'最初の圧縮エラー：'+firstError:''}`;
-};update();</script><script type="module">
-import {initializeApp} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js';
+ if(busy)return;busy=true;update();let fallback=0;
+ try{
+  for(let i=0;i<items.length;i++){
+   const x=items[i];await prepare(x);if(x.originalFallback)fallback++;
+   $('bar').style.width=Math.round((i+1)/items.length*100)+'%';$('status').textContent=`送信準備中：${i+1}/${items.length}枚`;update();await sleep(0);
+  }
+  $('status').textContent=`準備完了：圧縮 ${items.length-fallback}枚・元画像 ${fallback}枚。${fallback?'詳細を開くと失敗理由を確認できます。':''}`;
+ }catch(e){$('status').textContent='処理エラー：'+e.message}
+ finally{busy=false;render()}
+};update();
+</script><script type="module">import {initializeApp} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js';
 import {getAuth,signInWithEmailAndPassword,signOut,onAuthStateChanged} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
-import {getStorage,ref,uploadBytes} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js';
+import {getStorage,ref,uploadBytesResumable} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js';
 const firebaseConfig={apiKey:'AIzaSyB4GGNl7duF-UBbPiLxFlqkV622U1pd_A8',authDomain:'jsp-cleaning-album.firebaseapp.com',projectId:'jsp-cleaning-album',storageBucket:'jsp-cleaning-album.firebasestorage.app',messagingSenderId:'1042829628780',appId:'1:1042829628780:web:ecbcfa9c9a149e0a64cf49'};
-const app=initializeApp(firebaseConfig),auth=getAuth(app),storage=getStorage(app);
-const el=id=>document.getElementById(id);
+const app=initializeApp(firebaseConfig),auth=getAuth(app),storage=getStorage(app);const el=id=>document.getElementById(id);
 let sending=false;
-onAuthStateChanged(auth,user=>{window.albumUser=user||null;el('authStatus').textContent=user?'ログイン中：'+user.email:'未ログイン';el('logout').disabled=!user;el('login').disabled=!!user;update();});
-el('login').onclick=async()=>{el('authStatus').textContent='ログイン中…';try{await signInWithEmailAndPassword(auth,el('email').value.trim(),el('password').value);el('password').value='';}catch(e){el('authStatus').textContent='ログイン失敗：'+e.code;}};
-el('logout').onclick=async()=>{if(sending)return;await signOut(auth);};
-const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+onAuthStateChanged(auth,user=>{window.albumUser=user||null;el('authStatus').textContent=user?'ログイン中：'+user.email:'未ログイン';el('logout').disabled=!user||sending;el('login').disabled=!!user||sending;update()});
+el('login').onclick=async()=>{el('authStatus').textContent='ログイン中…';try{await signInWithEmailAndPassword(auth,el('email').value.trim(),el('password').value);el('password').value=''}catch(e){el('authStatus').textContent='ログイン失敗：'+e.code}};
+el('logout').onclick=async()=>{if(!sending)await signOut(auth)};
 const safeName=name=>name.replace(/[^a-zA-Z0-9._-]/g,'_').slice(-90);
-const testAlbum='albums/test-'+new Date().toISOString().slice(0,10);
+const localDay=new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+const testAlbum='albums/test-'+localDay;
+function uploadOne(item,path,onProgress){return new Promise((resolve,reject)=>{
+ const original=item.originalFallback;
+ const metadata={contentType:original?(item.file.type||'application/octet-stream'):'image/jpeg',customMetadata:{originalName:item.file.name,originalFallback:String(original)}};
+ const task=uploadBytesResumable(ref(storage,path),item.blob,metadata);
+ task.on('state_changed',snap=>onProgress(snap.bytesTransferred/snap.totalBytes),reject,()=>resolve());
+})}
 el('upload').onclick=async()=>{
  if(!auth.currentUser||busy||sending||!items.length)return;
- sending=true;busy=true;update();el('logout').disabled=true;el('uploadBar').style.width='0%';
+ sending=true;busy=true;update();el('logout').disabled=true;el('login').disabled=true;
+ const pending=items.filter(x=>!x.uploaded);const uid=auth.currentUser.uid;
  let success=0,fail=0,firstError='';
- const batch=items.slice();
- for(let i=0;i<batch.length;i++){
-   const item=batch[i];
+ try{
+  for(let i=0;i<pending.length;i++){
+   const item=pending[i];item.uploadError='';
    try{
-     if(!item.blob)await prepare(item);
-     // Every upload receives a unique path; avoid overwriting prior test images.
-     const unique=(crypto.randomUUID?crypto.randomUUID():Date.now()+'-'+i+'-'+Math.random().toString(36).slice(2));
-     const original=item.originalFallback;
-     const filename=original?safeName(item.file.name):safeName(item.file.name.replace(/\.[^.]+$/,'')+'.jpg');
-     const path=`${testAlbum}/${auth.currentUser.uid}/${unique}-${filename}`;
-     await uploadBytes(ref(storage,path),item.blob,{contentType:original?(item.file.type||'application/octet-stream'):'image/jpeg',customMetadata:{originalName:item.file.name,originalFallback:String(original)}});
-     success++;
-   }catch(e){fail++;if(!firstError)firstError=(e.code||e.message||String(e));console.error('Upload error:',e);}
-   el('uploadBar').style.width=Math.round((i+1)/batch.length*100)+'%';
-   el('uploadStatus').textContent=`アップロード中 ${i+1}/${batch.length}枚（成功${success}・失敗${fail}）`;
-   update();await sleep(0);
- }
- sending=false;busy=false;update();el('logout').disabled=false;
- el('uploadStatus').textContent=`完了：成功 ${success}枚／失敗 ${fail}枚。保存先：${testAlbum}。${firstError?'最初のエラー：'+firstError:''}`;
+    if(!item.blob)await prepare(item);
+    // Reuse the same path for a failed retry; never resend already completed photos.
+    if(!item.uploadPath){
+     const unique=(crypto.randomUUID?.()||Date.now()+'-'+i+'-'+Math.random().toString(36).slice(2));
+     const filename=item.originalFallback?safeName(item.file.name):safeName(item.file.name.replace(/\.[^.]+$/,'')+'.jpg');
+     item.uploadPath=`${testAlbum}/${uid}/${unique}-${filename}`;
+    }
+    await uploadOne(item,item.uploadPath,p=>{el('uploadBar').style.width=Math.round((i+p)/pending.length*100)+'%';el('uploadStatus').textContent=`アップロード中 ${i+1}/${pending.length}枚（${Math.round(p*100)}%）`});
+    item.uploaded=true;success++;
+   }catch(e){fail++;item.uploadError=e.code||e.message||String(e);if(!firstError)firstError=item.uploadError;console.error('Upload error',e)}
+   el('uploadBar').style.width=Math.round((i+1)/pending.length*100)+'%';update();await sleep(0);
+  }
+  el('uploadStatus').textContent=`今回の送信：成功 ${success}枚／失敗 ${fail}枚。累計保存 ${items.filter(x=>x.uploaded).length}/${items.length}枚。${fail?'失敗分は再度アップロードボタンで再試行できます。':''}${firstError?' 最初のエラー：'+firstError:''}`;
+ }finally{sending=false;busy=false;el('logout').disabled=!auth.currentUser;render()}
 };
 </script>
 </body></html>
