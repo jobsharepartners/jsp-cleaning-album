@@ -1,0 +1,2200 @@
+/* CARFACE 商品ページ */
+
+.carface-product .inside-article {
+    padding: 35px;
+}
+
+.carface-title {
+    font-size: 30px;
+    margin-bottom: 25px;
+}
+
+.carface-gallery {
+    margin-bottom: 35px;
+}
+
+.carface-main-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.carface-sub-images {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.carface-sub-images img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.carface-information h2 {
+    font-size: 23px;
+    margin-bottom: 18px;
+}
+
+.carface-information table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.carface-information th {
+    width: 35%;
+    background: #f6f5f2;
+    text-align: left;
+}
+
+.carface-information th,
+.carface-information td {
+    padding: 14px;
+    border-bottom: 1px solid #e8e6e2;
+}
+
+.carface-price {
+    font-size: 26px;
+    font-weight: 700;
+    margin: 25px 0 15px;
+}
+
+.carface-buy-button {
+    display: block;
+    padding: 17px;
+    text-align: center;
+    background: #424c45;
+    color: #fff !important;
+    border-radius: 7px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.carface-buy-button:hover {
+    background: #303a33;
+}
+
+.carface-description {
+    margin-top: 35px;
+}
+
+@media (max-width: 768px) {
+    .carface-product .inside-article {
+        padding: 20px;
+    }
+
+    .carface-title {
+        font-size: 24px;
+    }
+}
+
+
+/* 商品詳細：PCでは画像と情報を横並び */
+@media (min-width: 769px) {
+    .carface-product-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+        gap: 40px;
+        align-items: start;
+    }
+
+    .carface-product-layout > * {
+        min-width: 0;
+    }
+
+    .carface-gallery {
+        margin-bottom: 0;
+    }
+
+    .carface-information h2 {
+        margin-top: 0;
+    }
+}
+
+/* スマートフォンでは縦並び */
+@media (max-width: 768px) {
+    .carface-product-layout {
+        display: block;
+    }
+}
+
+
+/* ワードカスタマイズ案内 */
+
+.carface-customize {
+    margin-top: 24px;
+    padding: 18px 20px;
+    background: #f6f5f2;
+    border-radius: 8px;
+}
+
+.carface-customize h3 {
+    font-size: 17px;
+    margin: 0 0 12px;
+}
+
+.carface-customize p {
+    font-size: 14px;
+    line-height: 1.7;
+    margin: 0 0 8px;
+}
+
+.carface-customize p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* CARFACE 商品画像切り替え */
+
+.carface-thumbnails {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.carface-thumb {
+    display: block;
+    width: 100%;
+    padding: 4px;
+    background: transparent;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.carface-thumb.active {
+    border-color: #424c45;
+}
+
+.carface-thumb:hover {
+    border-color: #9ba69d;
+}
+
+.carface-thumb img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: contain;
+    border-radius: 5px;
+}
+
+@media (max-width: 480px) {
+    .carface-thumbnails {
+        gap: 6px;
+    }
+}
+
+
+/* メイン画像の表示枠を正方形に固定 */
+
+.carface-main-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #f8f8f6;
+    border-radius: 8px;
+}
+
+.carface-main-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+
+/* CARFACE 商品ページ スマホ最適化 */
+
+@media (max-width: 768px) {
+
+    /* 商品タイトル */
+    .carface-title {
+        font-size: 25px;
+        line-height: 1.45;
+        margin-bottom: 20px;
+    }
+
+    /* 商品情報の見出し */
+    .carface-information h2 {
+        font-size: 21px;
+        margin-bottom: 14px;
+    }
+
+    /* 商品情報テーブル */
+    .carface-spec-table {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .carface-spec-table th,
+    .carface-spec-table td {
+        padding: 12px 10px;
+        line-height: 1.5;
+        vertical-align: middle;
+        overflow-wrap: anywhere;
+    }
+
+    .carface-spec-table th {
+        width: 36%;
+        font-weight: 600;
+    }
+
+    /* カスタマイズ案内 */
+    .carface-customize {
+        margin-top: 20px;
+        padding: 15px;
+    }
+
+    .carface-customize h3 {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    .carface-customize p {
+        font-size: 13px;
+        line-height: 1.6;
+        margin-bottom: 8px;
+    }
+
+    /* 価格 */
+    .carface-price {
+        font-size: 28px;
+        margin-top: 20px;
+        margin-bottom: 18px;
+    }
+
+    /* 購入ボタン */
+    .carface-buy-button {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+        padding: 15px 12px;
+        font-size: 16px;
+    }
+
+    /* 商品の特徴 */
+    .carface-description {
+        margin-top: 35px;
+    }
+
+    .carface-description h2 {
+        font-size: 22px;
+        margin-bottom: 15px;
+    }
+
+    .carface-description p {
+        font-size: 15px;
+        line-height: 1.8;
+    }
+}
+
+
+/* CARFACE メーカー一覧ページ */
+
+.carface-cars-page {
+    padding: 40px 0 70px;
+}
+
+.carface-cars-page h1 {
+    font-size: 32px;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.carface-cars-lead {
+    text-align: center;
+    color: #666;
+    margin-bottom: 38px;
+}
+
+.carface-maker-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.carface-maker-card {
+    min-height: 125px;
+    padding: 22px 16px;
+    border: 1px solid #e3e3df;
+    border-radius: 10px;
+    background: #fff;
+    text-decoration: none;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    transition: border-color .2s, background .2s;
+}
+
+.carface-maker-card:hover {
+    border-color: #536057;
+    background: #f7f8f5;
+    color: #333;
+}
+
+.carface-maker-name {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.carface-maker-arrow {
+    font-size: 19px;
+    color: #737f76;
+}
+
+@media (max-width: 768px) {
+
+    .carface-cars-page {
+        padding: 25px 0 50px;
+    }
+
+    .carface-cars-page h1 {
+        font-size: 26px;
+    }
+
+    .carface-cars-lead {
+        font-size: 14px;
+        margin-bottom: 25px;
+    }
+
+    .carface-maker-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .carface-maker-card {
+        min-height: 105px;
+        padding: 18px 10px;
+    }
+
+    .carface-maker-name {
+        font-size: 16px;
+    }
+}
+
+
+/* CARFACE 車種分類ページ */
+
+.carface-taxonomy-page {
+    padding: 30px 0 70px;
+}
+
+.carface-breadcrumb {
+    font-size: 13px;
+    color: #777;
+    margin-bottom: 25px;
+}
+
+.carface-breadcrumb a {
+    color: #59675d;
+    text-decoration: none;
+}
+
+.carface-breadcrumb span {
+    margin: 0 5px;
+}
+
+.carface-taxonomy-page h1 {
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.carface-taxonomy-lead {
+    color: #666;
+    margin-bottom: 28px;
+}
+
+.carface-taxonomy-description {
+    margin-bottom: 25px;
+    line-height: 1.8;
+}
+
+/* 車種・世代カード */
+
+.carface-category-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.carface-category-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 90px;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #e3e3df;
+    border-radius: 9px;
+    color: #333;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.carface-category-card:hover {
+    border-color: #59675d;
+    color: #333;
+    background: #f7f8f5;
+}
+
+/* 商品カード */
+
+.carface-product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.carface-product-card {
+    display: block;
+    border: 1px solid #e8e8e4;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+    color: #333;
+    text-decoration: none;
+    transition: box-shadow .2s;
+}
+
+.carface-product-card:hover {
+    color: #333;
+    box-shadow: 0 5px 20px rgba(0,0,0,.07);
+}
+
+.carface-card-image {
+    aspect-ratio: 1 / 1;
+    background: #f8f8f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carface-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.carface-card-body {
+    padding: 16px;
+}
+
+.carface-card-body h2 {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.carface-card-price {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.carface-pagination {
+    margin-top: 35px;
+    text-align: center;
+}
+
+.carface-pagination .page-numbers {
+    display: inline-block;
+    padding: 7px 12px;
+    margin: 3px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+/* スマートフォン */
+
+@media (max-width: 768px) {
+
+    .carface-taxonomy-page {
+        padding: 20px 0 45px;
+    }
+
+    .carface-taxonomy-page h1 {
+        font-size: 26px;
+    }
+
+    .carface-category-grid,
+    .carface-product-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .carface-category-card {
+        min-height: 75px;
+        padding: 14px;
+        font-size: 14px;
+    }
+
+    .carface-card-body {
+        padding: 12px;
+    }
+
+    .carface-card-body h2 {
+        font-size: 14px;
+    }
+
+    .carface-card-price {
+        font-size: 16px;
+    }
+}
+
+
+/* CARFACE 商品カードの分類ラベル */
+
+.carface-card-labels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+.carface-card-label {
+    display: inline-block;
+    padding: 4px 9px;
+    border-radius: 4px;
+    background: #eef0eb;
+    color: #455348;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+    .carface-card-label {
+        font-size: 11px;
+        padding: 3px 7px;
+    }
+}
+
+
+/* CARFACE 商品絞り込み */
+
+.carface-filter-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: 14px;
+    padding: 20px;
+    margin-bottom: 28px;
+    background: #f6f5f2;
+    border-radius: 10px;
+}
+
+.carface-filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    flex: 1 1 170px;
+}
+
+.carface-filter-group label {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.carface-filter-group select {
+    width: 100%;
+    min-height: 44px;
+    border: 1px solid #d8dbd5;
+    border-radius: 6px;
+    background: #fff;
+    font-size: 14px;
+    padding: 8px 10px;
+}
+
+.carface-filter-button {
+    min-height: 44px;
+    padding: 10px 20px;
+    border-radius: 6px;
+    background: #414e45;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.carface-filter-button:hover {
+    background: #303b33;
+}
+
+@media (max-width: 768px) {
+    .carface-filter-form {
+        padding: 15px;
+        gap: 12px;
+    }
+
+    .carface-filter-group {
+        flex-basis: 100%;
+    }
+
+    .carface-filter-button {
+        width: 100%;
+    }
+}
+
+
+/* 商品が見つからない場合 */
+
+.carface-no-results {
+    padding: 35px 20px;
+    text-align: center;
+    background: #f8f8f6;
+    border-radius: 10px;
+}
+
+.carface-no-results p {
+    margin-bottom: 15px;
+    color: #555;
+}
+
+.carface-no-results a {
+    display: inline-block;
+    color: #455348;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+
+/* 同じ車種のほかの世代へ */
+
+.carface-back-model {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 17px 20px;
+    margin: 18px 0 28px;
+    background: #f6f5f2;
+    border: 1px solid #e8e7e2;
+    border-radius: 9px;
+    color: #414e45;
+    text-decoration: none;
+}
+
+.carface-back-model:hover {
+    background: #eeefe9;
+    color: #303b33;
+}
+
+.carface-back-model-text {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.carface-back-model-text strong {
+    font-size: 15px;
+}
+
+.carface-back-model-text small {
+    font-size: 13px;
+    color: #666;
+}
+
+@media (max-width: 768px) {
+    .carface-back-model {
+        padding: 14px 16px;
+        margin-bottom: 22px;
+    }
+}
+
+
+/* CARFACE スマホ用トップ画像 */
+@media (max-width: 767px) {
+  .carface-hero {
+    background-image: url("https://dev.carface2024.com/wp-content/uploads/2026/10/6b6d59e3750cca2dd76cc040ceeac1f3.webp") !important;
+    background-position: center center !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+  }
+}
+
+
+@media (max-width: 767px) {
+  .carface-hero-title {
+    margin-top: 80px !important;
+  }
+}
+	
+
+@media (max-width: 767px) {
+  h2.carface-hero-title {
+    font-size: 22px !important;
+    line-height: 1.5 !important;
+  }
+}
+	
+
+@media (max-width: 767px) {
+  .carface-maker-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+  }
+
+  .carface-maker-grid > .gb-grid-column {
+    width: 100% !important;
+    min-width: 0;
+  }
+}
+	
+
+/* 3デザイン紹介：スマホ画像サイズ調整 */
+@media (max-width: 767px) {
+  .carface-design-image {
+    width: 80% !important;
+    max-width: 320px !important;
+    height: auto !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
+
+/* 3デザイン紹介：スマホ見出し調整 */
+@media (max-width: 767px) {
+  h2.carface-design-title {
+    font-size: 24px !important;
+    line-height: 1.5 !important;
+  }
+}
+
+
+/* 3デザイン紹介：見出しの余白調整 */
+.carface-design-name {
+  margin-top: 12px !important;
+  margin-bottom: 8px !important;
+  line-height: 1.4 !important;
+}
+
+
+/* 3デザイン紹介：説明文の余白調整 */
+.carface-design-description {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  line-height: 1.6 !important;
+}
+
+
+
+/* トップページ：スマホ版のセクション余白 */
+@media (max-width: 767px) {
+  body.home .carface-section {
+    width: calc(100% - 32px);
+    max-width: 1200px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    box-sizing: border-box;
+  }
+}
+
+
+/* CARFACE フッターコピーライト */
+.site-info .copyright-bar {
+  font-size: 0;
+}
+
+.site-info .copyright-bar::after {
+  content: "© 2026 CARFACE. All Rights Reserved.";
+  font-size: 12px;
+  color: #777777;
+}
+
+.site-info {
+  background-color: #ffffff;
+  padding: 20px 15px;
+}
+
+
+/* CARFACE フッターメニュー */
+.footer-widgets {
+  background-color: #ffffff;
+  padding: 24px 16px 0;
+}
+
+.footer-widgets .widget {
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.footer-widgets .menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer-widgets .menu li {
+  margin: 0;
+  padding: 0;
+}
+
+.footer-widgets .menu a {
+  color: #555555;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.footer-widgets .menu a:hover {
+  color: #222222;
+  text-decoration: underline;
+}
+
+/* CARFACE 共通画像のサイズ調整 */
+.carface-common-images {
+    max-width: 600px;
+    margin: 48px auto 0;
+}
+
+.carface-common-images > h2 {
+    text-align: center;
+}
+
+.carface-common-image {
+    margin: 0 0 24px;
+    text-align: center;
+}
+
+.carface-common-img {
+    display: block;
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    margin: 0 auto;
+}
+
+/* CARFACE 商品ガイド レイアウト調整 */
+
+.carface-common-images {
+    max-width: 800px;
+    width: 100%;
+    margin: 60px auto 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.carface-common-images > h2 {
+    text-align: center;
+    margin-bottom: 12px;
+    padding-top: 24px;
+    border-top: 1px solid #e5e5e5;
+}
+
+.carface-common-image {
+    margin: 0;
+}
+
+.carface-common-img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+}
+
+/* スマホ */
+@media (max-width: 767px) {
+    .carface-common-images {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+        gap: 20px;
+        margin-top: 40px;
+    }
+}
+
+
+/* CARFACE メーカーロゴ */
+
+.carface-maker-logo {
+    width: 100%;
+    max-width: 190px;
+    height: 55px;
+    object-fit: contain;
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .carface-maker-logo {
+        max-width: 140px;
+        height: 45px;
+    }
+}
+
+/* CARFACE 車種一覧ページの横幅調整 */
+
+.carface-taxonomy-page {
+    width: 100%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* CARFACE 車種分類ページの幅調整 */
+
+body.tax-car_model .site.grid-container {
+    max-width: 1200px;
+    width: 100%;
+}
+
+body.tax-car_model .site-content,
+body.tax-car_model .site-main {
+    width: 100%;
+}
+
+body.tax-car_model .carface-taxonomy-page {
+    max-width: 100%;
+    width: 100%;
+}
+
+/* CARFACE 車種カードのデザイン調整 */
+
+.carface-category-card {
+    min-height: 110px;
+    padding: 24px;
+    font-size: 17px;
+    border-radius: 10px;
+    transition: background .2s, border-color .2s, transform .2s;
+}
+
+.carface-category-card:hover {
+    transform: translateY(-3px);
+}
+
+@media (max-width: 768px) {
+    .carface-category-card {
+        min-height: 90px;
+        padding: 16px;
+        font-size: 14px;
+    }
+}
+
+/* CARFACE 車種一覧 PC4列 */
+
+@media (min-width: 769px) {
+    .carface-category-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+
+@media (max-width: 768px) {
+    .carface-taxonomy-page {
+        padding-left: 16px;
+        padding-right: 16px;
+        box-sizing: border-box;
+    }
+}
+
+/* CARFACE 世代選択・画像付きカード */
+
+.carface-category-card:has(.carface-model-image) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    min-height: 210px;
+    padding: 18px;
+    text-align: center;
+}
+
+.carface-category-card .carface-model-image {
+    display: block;
+    width: 100%;
+    height: 145px;
+    object-fit: contain;
+}
+
+.carface-category-card:has(.carface-model-image) > span {
+    display: block;
+}
+
+.carface-category-card:has(.carface-model-image) > span:last-child {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .carface-category-card:has(.carface-model-image) {
+        min-height: 165px;
+        padding: 12px;
+    }
+
+    .carface-category-card .carface-model-image {
+        height: 110px;
+    }
+}
+
+
+/* =================================
+   CARFACE BASIC - スマホ表示
+   ================================= */
+
+@media (max-width: 768px) {
+
+  /* BASICページの本文 */
+  body.page-id-833 .entry-content {
+    font-size: 15px;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+  }
+
+  /* 見出し */
+  body.page-id-833 .entry-content h1 {
+    font-size: 36px;
+    line-height: 1.3;
+  }
+
+  body.page-id-833 .entry-content h2 {
+    font-size: 25px;
+    line-height: 1.4;
+  }
+
+  body.page-id-833 .entry-content h3 {
+    font-size: 19px;
+    line-height: 1.5;
+  }
+
+  /* 説明文 */
+  body.page-id-833 .entry-content p {
+    font-size: 15px;
+    line-height: 1.9;
+  }
+
+  /* ページ全体の横余白 */
+  body.page-id-833 .entry-content > :not(.gb-container) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+}
+
+
+
+
+/* BASIC 特徴カード：スマホ確定版 */
+
+@media (max-width: 768px) {
+
+  body.page-id-833 .carface-basic-features {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* Grid内の各Containerをカード化 */
+  body.page-id-833 .carface-basic-features > * {
+    background-color: #f7f7f5;
+    border: 1px solid #e5e5e2;
+    border-radius: 12px;
+    padding: 28px 18px;
+    box-sizing: border-box;
+    text-align: center;
+    width: 100%;
+  }
+
+  body.page-id-833 .carface-basic-features h3 {
+    font-size: 19px;
+    font-weight: 600;
+    margin: 0 0 12px;
+  }
+
+  body.page-id-833 .carface-basic-features p {
+    font-size: 14px;
+    line-height: 1.8;
+    margin: 0;
+  }
+
+}
+
+
+/* BASIC デザイン紹介：スマホ */
+
+@media (max-width: 768px) {
+
+  body.page-id-833 .carface-basic-design {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+    padding: 40px 20px;
+    box-sizing: border-box;
+  }
+
+  body.page-id-833 .carface-basic-design > * {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+
+
+  /* 説明文 */
+  body.page-id-833 .carface-basic-design h2 {
+    font-size: 24px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+
+  body.page-id-833 .carface-basic-design p {
+    font-size: 15px;
+    line-height: 1.9;
+    margin-bottom: 16px;
+  }
+
+}
+
+
+/* BASIC メーカー一覧：スマホ */
+
+@media (max-width: 768px) {
+
+  body.page-id-833 .carface-basic-makers {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    padding: 10px 20px 40px;
+    box-sizing: border-box;
+  }
+
+  body.page-id-833 .carface-basic-makers > * {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    background: #f7f7f5;
+    border: 1px solid #e8e8e5;
+    border-radius: 10px;
+    padding: 28px 8px;
+    text-align: center;
+  }
+
+  body.page-id-833 .carface-basic-makers h3 {
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0;
+  }
+
+}
+
+
+/* BASIC OTHER SERIES：スマホ */
+
+@media (max-width: 768px) {
+
+  body.page-id-833 .carface-basic-other {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  body.page-id-833 .carface-basic-other > * {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    background: #f7f7f5;
+    border: 1px solid #e8e8e5;
+    border-radius: 12px;
+    padding: 30px 24px;
+  }
+
+  body.page-id-833 .carface-basic-other h3 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 14px;
+  }
+
+  body.page-id-833 .carface-basic-other p {
+    font-size: 14px;
+    line-height: 1.8;
+    margin-bottom: 0;
+  }
+
+  body.page-id-833 .carface-basic-other > :first-child {
+    border-top: 4px solid #9eafa3;
+  }
+
+  body.page-id-833 .carface-basic-other > :last-child {
+    border-top: 4px solid #b2aaa1;
+  }
+
+}
+
+
+/* BASICページ：標準タイトルを非表示 */
+
+body.page-id-833 .entry-header .entry-title {
+  display: none;
+}
+
+
+/* =====================================
+   BASIC スマホ：見出しと余白の統一
+   ===================================== */
+
+@media (max-width: 768px) {
+
+  /* セクション見出し */
+  body.page-id-833 .entry-content h2 {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.45;
+    letter-spacing: 0.02em;
+    margin-top: 48px;
+    margin-bottom: 20px;
+  }
+
+  /* 各セクションのカードとの間隔 */
+  body.page-id-833 .carface-basic-features,
+  body.page-id-833 .carface-basic-makers,
+  body.page-id-833 .carface-basic-other {
+    margin-top: 16px;
+    margin-bottom: 48px;
+  }
+
+  /* デザイン紹介は内部に見出しがあるため調整 */
+  body.page-id-833 .carface-basic-design {
+    margin-top: 16px;
+    margin-bottom: 48px;
+  }
+
+  body.page-id-833 .carface-basic-design h2 {
+    margin-top: 0;
+  }
+
+}
+
+
+/* BASIC メーカー一覧：余白修正 */
+
+@media (max-width: 768px) {
+
+  body.page-id-833 .carface-basic-makers {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 12px;
+    row-gap: 12px;
+    align-items: stretch;
+    align-content: start;
+    grid-auto-rows: auto;
+  }
+
+  body.page-id-833 .carface-basic-makers > * {
+    margin: 0;
+    min-height: 90px;
+    align-self: stretch;
+  }
+
+}
+
+
+/* ==========================================
+   CARFACE BASIC - PC版スタイル
+   対象：固定ページ ID 833
+   769px以上
+   ========================================== */
+
+@media (min-width: 769px) {
+
+  /* ページ全体 */
+  body.page-id-833 .entry-content {
+    font-size: 16px;
+    line-height: 1.85;
+  }
+
+  /* 共通見出し */
+  body.page-id-833 .entry-content h2 {
+    font-size: 32px;
+    line-height: 1.4;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    margin: 0 0 28px;
+  }
+
+  body.page-id-833 .entry-content h3 {
+    font-size: 20px;
+    line-height: 1.5;
+    font-weight: 600;
+  }
+
+  body.page-id-833 .entry-content p {
+    font-size: 16px;
+    line-height: 1.85;
+  }
+
+  /* ======================================
+     1. BASICの特徴
+     ====================================== */
+
+  body.page-id-833 .carface-basic-features {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    margin: 24px auto 100px;
+    max-width: 1200px;
+  }
+
+  body.page-id-833 .carface-basic-features > * {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    background: #f7f7f5;
+    border: 1px solid #e5e5e2;
+    border-radius: 12px;
+    padding: 42px 25px;
+    text-align: center;
+  }
+
+  body.page-id-833 .carface-basic-features h3 {
+    font-size: 20px;
+    margin: 0 0 16px;
+  }
+
+  body.page-id-833 .carface-basic-features p {
+    font-size: 15px;
+    margin: 0;
+  }
+
+  /* ======================================
+     2. デザイン紹介
+     ====================================== */
+
+  body.page-id-833 .carface-basic-design {
+    display: grid;
+    grid-template-columns:
+      minmax(0, 1fr) minmax(0, 1fr);
+    gap: 60px;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto 110px;
+  }
+
+  body.page-id-833 .carface-basic-design > * {
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+
+
+  /* 右側の説明文 */
+  body.page-id-833 .carface-basic-design h2 {
+    font-size: 30px;
+    margin: 0 0 24px;
+  }
+
+  body.page-id-833 .carface-basic-design p {
+    font-size: 16px;
+    line-height: 2;
+    margin-bottom: 20px;
+  }
+
+  /* ======================================
+     3. メーカー別商品一覧
+     ====================================== */
+
+  body.page-id-833 .carface-basic-makers {
+    display: grid;
+    grid-template-columns:
+      repeat(4, minmax(0, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 30px auto 110px;
+  }
+
+  body.page-id-833 .carface-basic-makers > * {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    background: #f7f7f5;
+    border: 1px solid #e5e5e2;
+    border-radius: 12px;
+    padding: 45px 15px;
+    text-align: center;
+    transition: background-color 0.2s ease,
+                transform 0.2s ease;
+  }
+
+  body.page-id-833 .carface-basic-makers > *:hover {
+    background: #eeeeea;
+    transform: translateY(-3px);
+  }
+
+  body.page-id-833 .carface-basic-makers h3 {
+    font-size: 20px;
+    margin: 0;
+  }
+
+  /* ======================================
+     4. OTHER SERIES
+     ====================================== */
+
+  body.page-id-833 .carface-basic-other {
+    display: grid;
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    max-width: 1200px;
+    margin: 30px auto 100px;
+  }
+
+  body.page-id-833 .carface-basic-other > * {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    background: #f7f7f5;
+    border: 1px solid #e5e5e2;
+    border-radius: 12px;
+    padding: 48px 36px;
+  }
+
+  body.page-id-833 .carface-basic-other > :first-child {
+    border-top: 4px solid #9eafa3;
+  }
+
+  body.page-id-833 .carface-basic-other > :last-child {
+    border-top: 4px solid #b2aaa1;
+  }
+
+  body.page-id-833 .carface-basic-other h3 {
+    font-size: 26px;
+    margin: 0 0 16px;
+  }
+
+  body.page-id-833 .carface-basic-other p {
+    font-size: 16px;
+    margin-bottom: 0;
+  }
+
+}
+
+
+/* BASIC PC版：セクション説明文の配置修正 */
+
+@media (min-width: 769px) {
+
+  body.page-id-833 .entry-content > p {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+}
+
+
+/* BASIC トップ画像：見出し */
+
+@media (min-width: 769px) {
+
+  body.page-id-833 .basic-hero-title {
+    font-size: 64px !important;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.08em;
+    color: #ffffff !important;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+    margin-bottom: 24px;
+  }
+
+}
+
+
+/* BASIC ヒーロー：キャッチコピー PC版 */
+@media (min-width: 769px) {
+
+  body.page-id-833 .basic-hero-copy {
+    font-size: 26px !important;
+    font-weight: 700 !important;
+    line-height: 1.6;
+    letter-spacing: 0.04em;
+    color: #ffffff !important;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.65);
+
+    max-width: 700px;
+    width: 90%;
+    margin: 20px auto 16px;
+    text-align: center;
+  }
+
+}
+
+
+/* BASIC ヒーロー：説明文 PC版 */
+@media (min-width: 769px) {
+
+  body.page-id-833 .basic-hero-description {
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    line-height: 1.9;
+    letter-spacing: 0.03em;
+    color: #ffffff !important;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+
+    max-width: 650px;
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+}
+
+ 
+/* BASIC ヒーロー：スマホ版 */
+@media (max-width: 768px) {
+
+  body.page-id-833 .basic-hero {
+    background-image: url("http://dev.carface2024.com/wp-content/uploads/2026/11/f8477b335a7a79a9255a85eeb89c815c-1.webp") !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    min-height: 650px;
+  }
+
+}
+
+
+
+/* BASIC ヒーロー：スマホ文字調整 */
+@media (max-width: 768px) {
+
+  body.page-id-833 .basic-hero-title {
+    font-size: 38px !important;
+    line-height: 1.3 !important;
+    color: #ffffff !important;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    margin-bottom: 18px;
+  }
+
+  body.page-id-833 .basic-hero-copy {
+    font-size: 17px !important;
+    font-weight: 600 !important;
+    line-height: 1.7 !important;
+    color: #ffffff !important;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    max-width: 320px;
+    width: 88%;
+    margin: 0 auto 20px;
+    text-align: center;
+  }
+
+  body.page-id-833 .basic-hero-description {
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    line-height: 1.8 !important;
+    color: #ffffff !important;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.65);
+    max-width: 320px;
+    width: 88%;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+}
+
+
+/* BASIC スマホ版：文字色を白に統一 */
+@media (max-width: 768px) {
+
+  body.page-id-833 .basic-hero .basic-hero-title,
+  body.page-id-833 .basic-hero .basic-hero-copy,
+  body.page-id-833 .basic-hero .basic-hero-description {
+    color: #ffffff !important;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.55) !important;
+  }
+
+}
+
+/* ===================================================
+   CARFACE SMILE (page-id-998) 追加CSS
+   BASICページのブロック構成・クラス名を引き継ぐ
+   BASIC用CSSは変更しない
+   =================================================== */
+
+/* =================================
+   CARFACE SMILE - スマホ表示
+   ================================= */
+
+@media (max-width: 768px) {
+
+  /* SMILEページの本文 */
+  body.page-id-998 .entry-content {
+    font-size: 15px;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+  }
+
+  /* 見出し */
+  body.page-id-998 .entry-content h1 {
+    font-size: 36px;
+    line-height: 1.3;
+  }
+
+  body.page-id-998 .entry-content h2 {
+    font-size: 25px;
+    line-height: 1.4;
+  }
+
+  body.page-id-998 .entry-content h3 {
+    font-size: 19px;
+    line-height: 1.5;
+  }
+
+  /* 説明文 */
+  body.page-id-998 .entry-content p {
+    font-size: 15px;
+    line-height: 1.9;
+  }
+
+  /* ページ全体の横余白 */
+  body.page-id-998 .entry-content > :not(.gb-container) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+}
+
+
+
+
+/* SMILE 特徴カード：スマホ確定版 */
+
+@media (max-width: 768px) {
+
+  body.page-id-998 .carface-basic-features {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* Grid内の各Containerをカード化 */
+  body.page-id-998 .carface-basic-features > * {
+    background-color: #f7f7f5;
+    border: 1px solid #e5e5e2;
+    border-radius: 12px;
+    padding: 28px 18px;
+    box-sizing: border-box;
+    text-align: center;
+    width: 100%;
+  }
+
+  body.page-id-998 .carface-basic-features h3 {
+    font-size: 19px;
+    font-weight: 600;
+    margin: 0 0 12px;
+  }
+
+  body.page-id-998 .carface-basic-features p {
+    font-size: 14px;
+    line-height: 1.8;
+    margin: 0;
+  }
+
+}
+
+
+/* SMILE デザイン紹介：スマホ */
+
+@media (max-width: 768px) {
+
+  body.page-id-998 .carface-basic-design {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+    padding: 40px 20px;
+    box-sizing: border-box;
+  }
+
+  body.page-id-998 .carface-basic-design > * {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+
+
+  /* 説明文 */
+  body.page-id-998 .carface-basic-design h2 {
+    font-size: 24px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+
+  body.page-id-998 .carface-basic-design p {
+    font-size: 15px;
+    line-height: 1.9;
+    margin-bottom: 16px;
+  }
+
+}
+
+
+/* SMILE メーカー一覧：スマホ */
+
+@media (max-width: 768px) {
+
+  body.page-id-998 .carface-basic-makers {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    padding: 10px 20px 40px;
+    box-sizing: border-box;
+  }
+
+  body.page-id-998 .carface-basic-makers > * {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    background: #f7f7f5;
+    border: 1px solid #e8e8e5;
+    border-radius: 10px;
+    padding: 28px 8px;
+    text-align: center;
+  }
+
+  body.page-id-998 .carface-basic-makers h3 {
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0;
+  }
+
+}
+
+
+/* SMILE OTHER SERIES：スマホ */
+
+@media (max-width: 768px) {
+
+  body.page-id-998 .carface-basic-other {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  body.page-id-998 .carface-basic-other > * {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    background: #f7f7f5;
+    border: 1px solid #e8e8e5;
+    border-radius: 12px;
+    padding: 30px 24px;
+  }
+
+  body.page-id-998 .carface-basic-other h3 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 14px;
+  }
+
+  body.page-id-998 .carface-basic-other p {
+    font-size: 14px;
+    line-height: 1.8;
+    margin-bottom: 0;
+  }
+
+  body.page-id-998 .carface-basic-other > :first-child {
+    border-top: 4px solid #9eafa3;
+  }
+
+  body.page-id-998 .carface-basic-other > :last-child {
+    border-top: 4px solid #b2aaa1;
+  }
+
+}
+
+
+/* SMILEページ：標準タイトルを非表示 */
+
+body.page-id-998 .entry-header .entry-title {
+  display: none;
+}
+
+
+/* =====================================
+   SMILE スマホ：見出しと余白の統一
+   ===================================== */
+
+@media (max-width: 768px) {
+
+  /* セクション見出し */
+  body.page-id-998 .entry-content h2 {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.45;
+    letter-spacing: 0.02em;
+    margin-top: 48px;
+    margin-bottom: 20px;
+  }
+
+  /* 各セクションのカードとの間隔 */
+  body.page-id-998 .carface-basic-features,
+  body.page-id-998 .carface-basic-makers,
+  body.page-id-998 .carface-basic-other {
+    margin-top: 16px;
+    margin-bottom: 48px;
+  }
+
+  /* デザイン紹介は内部に見出しがあるため調整 */
+  body.page-id-998 .carface-basic-design {
+    margin-top: 16px;
+    margin-bottom: 48px;
+  }
+
+  body.page-id-998 .carface-basic-design h2 {
+    margin-top: 0;
+  }
+
+}
+
+
+/* SMILE メーカー一覧：余白修正 */
+
+@media (max-width: 768px) {
+
+  body.page-id-998 .carface-basic-makers {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 12px;
+    row-gap: 12px;
+    align-items: stretch;
+    align-content: start;
+    grid-auto-rows: auto;
+  }
+
+  body.page-id-998 .carface-basic-makers > * {
+    margin: 0;
+    min-height: 90px;
+    align-self: stretch;
+  }
+
+}
+
+
+/* ==========================================
+   CARFACE SMILE - PC版スタイル
+   対象：固定ページ ID 998
+   769px以上
+   ========================================== */
+
+@media (min-width: 769px) {
+
+  /* ページ全体 */
+  body.page-id-998 .entry-content {
+    font-size: 16px;
+    line-height: 1.85;
+  }
+
+  /* 共通見出し */
+  body.page-id-998 .entry-content h2 {
+    font-size: 32px;
+    line-height: 1.4;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    margin: 0 0 28px;
+  }
+
+  body.page-id-998 .entry-content h3 {
+    font-size: 20px;
+    line-height: 1.5;
+    font-weight: 600;
+  }
+
+  body.page-id-998 .entry-content p {
+    font-size: 16px;
+    line-height: 1.85;
+  }
+
+  /* ======================================
+     1. BASICの特徴
+     ====================================== */
+
+  body.page-id-998 .carface-basic-features {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    margin: 24px auto 100px;
+    max-width: 1200px;
+  }
+
+  body.page-id-998 .carface-basic-features > * {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    background: #f7f7f5;
+    border: 1px solid #e5e5e2;
+    border-radius: 12px;
+    padding: 42px 25px;
+    text-align: center;
+  }
+
+  body.page-id-998 .carface-basic-features h3 {
+    font-size: 20px;
+    margin: 0 0 16px;
+  }
+
+  body.page-id-998 .carface-basic-features p {
+    font-size: 15px;
+    margin: 0;
+  }
+
+  /* ======================================
+     2. デザイン紹介
+     ====================================== */
+
+  body.page-id-998 .carface-basic-design {
+    display: grid;
+    grid-template-columns:
+      minmax(0, 1fr) minmax(0, 1fr);
+    gap: 60px;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto 110px;
+  }
+
+  body.page-id-998 .carface-basic-design > * {
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+
+
+  /* 右側の説明文 */
+  body.page-id-998 .carface-basic-design h2 {
+    font-size: 30px;
+    margin: 0 0 24px;
+  }
+
+  body.page-id-998 .carface-basic-design p {
+    font-size: 16px;
+    line-height: 2;
+    margin-bottom: 20px;
+  }
+
+  /* ======================================
+     3. メーカー別商品一覧
+     ====================================== */
+
+  body.page-id-998 .carface-basic-makers {
+    display: grid;
+    grid-template-columns:
+      repeat(4, minmax(0, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 30px auto 110px;
+  }
+
+  body.page-id-998 .carface-basic-makers > * {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    background: #f7f7f5;
+    border: 1px solid #e5e5e2;
+    border-radius: 12px;
+    padding: 45px 15px;
+    text-align: center;
+    transition: background-color 0.2s ease,
+                transform 0.2s ease;
+  }
+
+  body.page-id-998 .carface-basic-makers > *:hover {
+    background: #eeeeea;
+    transform: translateY(-3px);
+  }
+
+  body.page-id-998 .carface-basic-makers h3 {
+    font-size: 20px;
+    margin: 0;
+  }
+
+  /* ======================================
+     4. OTHER SERIES
+     ====================================== */
+
+  body.page-id-998 .carface-basic-other {
+    display: grid;
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    max-width: 1200px;
+    margin: 30px auto 100px;
+  }
+
+  body.page-id-998 .carface-basic-other > * {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    background: #f7f7f5;
+    border: 1px solid #e5e5e2;
+    border-radius: 12px;
+    padding: 48px 36px;
+  }
+
+  body.page-id-998 .carface-basic-other > :first-child {
+    border-top: 4px solid #9eafa3;
+  }
+
+  body.page-id-998 .carface-basic-other > :last-child {
+    border-top: 4px solid #b2aaa1;
+  }
+
+  body.page-id-998 .carface-basic-other h3 {
+    font-size: 26px;
+    margin: 0 0 16px;
+  }
+
+  body.page-id-998 .carface-basic-other p {
+    font-size: 16px;
+    margin-bottom: 0;
+  }
+
+}
+
+
+/* SMILE PC版：セクション説明文の配置修正 */
+
+@media (min-width: 769px) {
+
+  body.page-id-998 .entry-content > p {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+}
+
+
+/* SMILE トップ画像：見出し */
+
+@media (min-width: 769px) {
+
+  body.page-id-998 .basic-hero-title {
+    font-size: 64px !important;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.08em;
+    color: #ffffff !important;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+    margin-bottom: 24px;
+  }
+
+}
+
+
+/* SMILE ヒーロー：キャッチコピー PC版 */
+@media (min-width: 769px) {
+
+  body.page-id-998 .basic-hero-copy {
+    font-size: 26px !important;
+    font-weight: 700 !important;
+    line-height: 1.6;
+    letter-spacing: 0.04em;
+    color: #ffffff !important;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.65);
+
+    max-width: 700px;
+    width: 90%;
+    margin: 20px auto 16px;
+    text-align: center;
+  }
+
+}
+
+
+/* SMILE ヒーロー：説明文 PC版 */
+@media (min-width: 769px) {
+
+  body.page-id-998 .basic-hero-description {
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    line-height: 1.9;
+    letter-spacing: 0.03em;
+    color: #ffffff !important;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+
+    max-width: 650px;
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+}
+
+ 
+/* SMILE ヒーロー：スマホ版（背景画像はSMILEページ側で指定） */
+@media (max-width: 768px) {
+  body.page-id-998 .basic-hero {
+    min-height: 650px;
+  }
+}
+
+
+
+/* SMILE ヒーロー：スマホ文字調整 */
+@media (max-width: 768px) {
+
+  body.page-id-998 .basic-hero-title {
+    font-size: 38px !important;
+    line-height: 1.3 !important;
+    color: #ffffff !important;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    margin-bottom: 18px;
+  }
+
+  body.page-id-998 .basic-hero-copy {
+    font-size: 17px !important;
+    font-weight: 600 !important;
+    line-height: 1.7 !important;
+    color: #ffffff !important;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    max-width: 320px;
+    width: 88%;
+    margin: 0 auto 20px;
+    text-align: center;
+  }
+
+  body.page-id-998 .basic-hero-description {
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    line-height: 1.8 !important;
+    color: #ffffff !important;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.65);
+    max-width: 320px;
+    width: 88%;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+}
+
+
+/* SMILE スマホ版：文字色を白に統一 */
+@media (max-width: 768px) {
+
+  body.page-id-998 .basic-hero .basic-hero-title,
+  body.page-id-998 .basic-hero .basic-hero-copy,
+  body.page-id-998 .basic-hero .basic-hero-description {
+    color: #ffffff !important;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.55) !important;
+  }
+
+}
+
